@@ -18,14 +18,9 @@ export default function AdminDashboard() {
           className={`mr-2 ${activeTab === "dashboard" ? "bg-red-500 text-white" : "bg-gray-700"} px-4 py-2 rounded`}
           onClick={() => setActiveTab("dashboard")}
         >
-          Manager Dashboard
+          Finalized Timesheet Approval
         </button>
-        <button
-          className={`mr-2 ${activeTab === "approvals" ? "bg-red-500 text-white" : "bg-gray-700"} px-4 py-2 rounded`}
-          onClick={() => setActiveTab("approvals")}
-        >
-          Approvals
-        </button>
+       
         <button
           className={`mr-2 ${activeTab === "summary" ? "bg-red-500 text-white" : "bg-gray-700"} px-4 py-2 rounded`}
           onClick={() => setActiveTab("summary")}
@@ -46,7 +41,6 @@ export default function AdminDashboard() {
         </button>
       </div>
       {activeTab === "dashboard" && <ManagerDashboard />}
-      {activeTab === "approvals" && <ApprovalWorkflow />}
       {activeTab === "summary" && <DataSummary />}
       {activeTab === "reports" && <ReportGenerator />}
       {activeTab === "communication" && <CommunicationTools />}

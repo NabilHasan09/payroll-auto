@@ -14,7 +14,7 @@ interface InternSchedule {
 // Dummy data to simulate intern schedules
 const dummyInternSchedules: InternSchedule[] = [
   {
-    intern: "John Doe",
+    intern: "Gregory Tomchuk",
     monday: { type: "on-site", hours: 8 },
     tuesday: { type: "on-site", hours: 8 },
     wednesday: { type: "remote", hours: 7 },
@@ -22,7 +22,7 @@ const dummyInternSchedules: InternSchedule[] = [
     friday: { type: "remote", hours: 7 },
   },
   {
-    intern: "Jane Smith",
+    intern: "Hasib Shaif",
     monday: { type: "remote", hours: 7 },
     tuesday: { type: "on-site", hours: 8 },
     wednesday: { type: "on-site", hours: 8 },

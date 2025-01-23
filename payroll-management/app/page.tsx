@@ -2,7 +2,7 @@ import Link from "next/link"
 import * as React from 'react';
 import { Stack } from "@mui/material";
 import Button from '@mui/material/Button';
-import MTAlogo from "../public/MTAlogo2.jpg";
+import MTAlogo from "../public/mtalogo.png";
 import Image from "next/image";
 
 

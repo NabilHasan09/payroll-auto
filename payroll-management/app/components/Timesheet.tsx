@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useEffect } from "react"
 
 interface TimesheetEntry {
@@ -11,6 +9,7 @@ interface TimesheetEntry {
   EarnsBeginDt: string
   EarnsEndDt: string
   AdjustedHours?: number
+  AdjustmentReason?: string
 }
 
 // Dummy function to simulate fetching Kronos data
@@ -82,6 +81,9 @@ export default function Timesheet({ employeeId }: { employeeId: string }) {
   const [timesheet, setTimesheet] = useState<TimesheetEntry[]>([])
   const [loading, setLoading] = useState(true)
 
+  // Local state for editing the reason text before committing
+  const [reasonInputs, setReasonInputs] = useState<{ [index: number]: string }>({})
+
   useEffect(() => {
     const loadTimesheet = async () => {
       setLoading(true)
@@ -94,21 +96,33 @@ export default function Timesheet({ employeeId }: { employeeId: string }) {
 
   const handleAdjustment = (index: number, adjustedHours: number) => {
     setTimesheet((prevTimesheet) =>
-      prevTimesheet.map((entry, i) => (i === index ? { ...entry, AdjustedHours: adjustedHours } : entry)),
+      prevTimesheet.map((entry, i) =>
+        i === index
+          ? { ...entry, AdjustedHours: adjustedHours }
+          : entry
+      )
     )
   }
 
-  const groupedTimesheet = timesheet.reduce(
-    (acc, entry) => {
-      const key = `${entry.EarnsBeginDt} - ${entry.EarnsEndDt}`
-      if (!acc[key]) {
-        acc[key] = []
-      }
-      acc[key].push(entry)
-      return acc
-    },
-    {} as Record<string, TimesheetEntry[]>,
-  )
+  // Called when the user clicks the Enter button
+  const handleAdjustmentReason = (index: number, reason: string) => {
+    setTimesheet((prevTimesheet) =>
+      prevTimesheet.map((entry, i) =>
+        i === index
+          ? { ...entry, AdjustmentReason: reason }
+          : entry
+      )
+    )
+  }
+
+  const groupedTimesheet = timesheet.reduce((acc, entry) => {
+    const key = `${entry.EarnsBeginDt} - ${entry.EarnsEndDt}`
+    if (!acc[key]) {
+      acc[key] = []
+    }
+    acc[key].push(entry)
+    return acc
+  }, {} as Record<string, TimesheetEntry[]>)
 
   if (loading) {
     return <div>Loading timesheet data...</div>
@@ -129,27 +143,63 @@ export default function Timesheet({ employeeId }: { employeeId: string }) {
                 <th className="border border-gray-600 px-4 py-2">Earning Code</th>
                 <th className="border border-gray-600 px-4 py-2">Kronos Hours</th>
                 <th className="border border-gray-600 px-4 py-2">Adjusted Hours</th>
+                <th className="border border-gray-600 px-4 py-2">Reason</th>
+                <th className="border border-gray-600 px-4 py-2">Action</th>
               </tr>
             </thead>
             <tbody>
-              {entries.map((entry, index) => (
-                <tr key={index} className="bg-gray-700">
-                  <td className="border border-gray-600 px-4 py-2">{entry.Emplid}</td>
-                  <td className="border border-gray-600 px-4 py-2">{entry.EarnsBeginDt}</td>
-                  <td className="border border-gray-600 px-4 py-2">{entry.EarnsEndDt}</td>
-                  <td className="border border-gray-600 px-4 py-2">{entry.EarningCode}</td>
-                  <td className="border border-gray-600 px-4 py-2">{entry.Hours}</td>
-                  <td className="border border-gray-600 px-4 py-2">
-                    <input
-                      type="number"
-                      className="border rounded px-2 py-1 w-20 bg-gray-800 text-white"
-                      defaultValue={entry.Hours}
-                      onChange={(e) => handleAdjustment(timesheet.indexOf(entry), Number.parseFloat(e.target.value))}
-                    />
-                  </td>
-                  
-                </tr>
-              ))}
+              {entries.map((entry, indexInGroup) => {
+                // Global index in `timesheet` array
+                const globalIndex = timesheet.indexOf(entry)
+
+                return (
+                  <tr key={indexInGroup} className="bg-gray-700">
+                    <td className="border border-gray-600 px-4 py-2">{entry.Emplid}</td>
+                    <td className="border border-gray-600 px-4 py-2">{entry.EarnsBeginDt}</td>
+                    <td className="border border-gray-600 px-4 py-2">{entry.EarnsEndDt}</td>
+                    <td className="border border-gray-600 px-4 py-2">{entry.EarningCode}</td>
+                    <td className="border border-gray-600 px-4 py-2">{entry.Hours}</td>
+                    <td className="border border-gray-600 px-4 py-2">
+                      <input
+                        type="number"
+                        className="border rounded px-2 py-1 w-20 bg-gray-800 text-white"
+                        defaultValue={entry.Hours}
+                        onChange={(e) =>
+                          handleAdjustment(globalIndex, Number.parseFloat(e.target.value))
+                        }
+                      />
+                    </td>
+                    <td className="border border-gray-600 px-4 py-2">
+                      <input
+                        type="text"
+                        className="border rounded px-2 py-1 w-full bg-gray-800 text-white"
+                        placeholder="Reason"
+                        // Show the local reason if typed, else fallback to what's in state
+                        value={reasonInputs[globalIndex] ?? entry.AdjustmentReason ?? ""}
+                        onChange={(e) =>
+                          setReasonInputs((prev) => ({
+                            ...prev,
+                            [globalIndex]: e.target.value,
+                          }))
+                        }
+                      />
+                    </td>
+                    <td className="border border-gray-600 px-4 py-2 text-center">
+                      <button
+                        className="px-3 py-1 bg-blue-500 text-white rounded"
+                        onClick={() =>
+                          handleAdjustmentReason(
+                            globalIndex,
+                            reasonInputs[globalIndex] ?? ""
+                          )
+                        }
+                      >
+                        Enter
+                      </button>
+                    </td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </div>
@@ -157,4 +207,3 @@ export default function Timesheet({ employeeId }: { employeeId: string }) {
     </div>
   )
 }
-

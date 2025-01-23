@@ -4,9 +4,9 @@ import { useState, useEffect } from "react"
 
 // Dummy data to simulate consolidated data from Kronos and submitted timesheets
 const dummyConsolidatedData = [
-  { intern: "Gregory Tomchuk", department: "IT", totalHours: 40, adjustments: 2, flagged: false },
-  { intern: "Hasib Shaif", department: "Marketing", totalHours: 42, adjustments: 1, flagged: true },
-  { intern: "Bob Johnson", department: "Finance", totalHours: 38, adjustments: 0, flagged: false },
+  { intern: "Gregory Tomchuk", department: "IT", totalHours: 80, adjustments: 2, flagged: false },
+  { intern: "Hasib Shaif", department: "Marketing", totalHours: 75, adjustments: 0, flagged: false },
+  { intern: "Bob Johnson", department: "Finance", totalHours: 80, adjustments: 2, flagged: true },
 ]
 
 export default function DataSummary() {
@@ -25,7 +25,6 @@ export default function DataSummary() {
         <thead>
           <tr className="bg-gray-800">
             <th className="border border-gray-600 px-4 py-2">Intern</th>
-            <th className="border border-gray-600 px-4 py-2">Department</th>
             <th className="border border-gray-600 px-4 py-2">Total Hours</th>
             <th className="border border-gray-600 px-4 py-2">Adjustments</th>
             <th className="border border-gray-600 px-4 py-2">Flagged</th>
@@ -35,7 +34,6 @@ export default function DataSummary() {
           {consolidatedData.map((data) => (
             <tr key={data.intern} className={data.flagged ? "bg-red-400" : "bg-gray-700"}>
               <td className="border border-gray-600 px-4 py-2">{data.intern}</td>
-              <td className="border border-gray-600 px-4 py-2">{data.department}</td>
               <td className="border border-gray-600 px-4 py-2">{data.totalHours}</td>
               <td className="border border-gray-600 px-4 py-2">{data.adjustments}</td>
               <td className="border border-gray-600 px-4 py-2">{data.flagged ? "Yes" : "No"}</td>
