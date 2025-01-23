@@ -10,9 +10,17 @@ interface TimesheetEntry {
   GrossUp: string
   EarnsBeginDt: string
   EarnsEndDt: string
+  AdjustedHours?: number
 }
 
-// Dummy data to simulate Kronos integration
+// Dummy function to simulate fetching Kronos data
+const fetchKronosData = async (employeeId: string): Promise<TimesheetEntry[]> => {
+  // In a real app, this would be an API call
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(dummyKronosData), 500)
+  })
+}
+
 const dummyKronosData: TimesheetEntry[] = [
   {
     Emplid: "123456",
@@ -68,114 +76,28 @@ const dummyKronosData: TimesheetEntry[] = [
     EarnsBeginDt: "11/16/2024",
     EarnsEndDt: "11/29/2024",
   },
-  {
-    Emplid: "123456",
-    EarningCode: "TRT",
-    Amount: "",
-    Hours: 10,
-    GrossUp: "N",
-    EarnsBeginDt: "9/21/2024",
-    EarnsEndDt: "10/4/2024",
-  },
-  {
-    Emplid: "123456",
-    EarningCode: "TRT",
-    Amount: "",
-    Hours: 7,
-    GrossUp: "N",
-    EarnsBeginDt: "11/2/2024",
-    EarnsEndDt: "11/15/2024",
-  },
-  {
-    Emplid: "123456",
-    EarningCode: "TRT",
-    Amount: "",
-    Hours: 59,
-    GrossUp: "N",
-    EarnsBeginDt: "11/2/2024",
-    EarnsEndDt: "11/15/2024",
-  },
-  {
-    Emplid: "123456",
-    EarningCode: "TRT",
-    Amount: "",
-    Hours: 35,
-    GrossUp: "N",
-    EarnsBeginDt: "11/16/2024",
-    EarnsEndDt: "11/29/2024",
-  },
-  {
-    Emplid: "123456",
-    EarningCode: "TRT",
-    Amount: "",
-    Hours: 42,
-    GrossUp: "N",
-    EarnsBeginDt: "11/16/2024",
-    EarnsEndDt: "11/29/2024",
-  },
-  {
-    Emplid: "123456",
-    EarningCode: "TRT",
-    Amount: "",
-    Hours: 7,
-    GrossUp: "N",
-    EarnsBeginDt: "10/19/2024",
-    EarnsEndDt: "11/1/2024",
-  },
-  {
-    Emplid: "123456",
-    EarningCode: "TRT",
-    Amount: "",
-    Hours: 6,
-    GrossUp: "N",
-    EarnsBeginDt: "11/2/2024",
-    EarnsEndDt: "11/15/2024",
-  },
-  {
-    Emplid: "123456",
-    EarningCode: "TRT",
-    Amount: "",
-    Hours: 6.44,
-    GrossUp: "N",
-    EarnsBeginDt: "11/2/2024",
-    EarnsEndDt: "11/15/2024",
-  },
-  {
-    Emplid: "123456",
-    EarningCode: "TRT",
-    Amount: "",
-    Hours: 28.15,
-    GrossUp: "N",
-    EarnsBeginDt: "11/2/2024",
-    EarnsEndDt: "11/15/2024",
-  },
-  {
-    Emplid: "123456",
-    EarningCode: "TRT",
-    Amount: "",
-    Hours: 8.45,
-    GrossUp: "N",
-    EarnsBeginDt: "10/19/2024",
-    EarnsEndDt: "11/1/2024",
-  },
 ]
 
-export default function Timesheet() {
-  const [timesheet, setTimesheet] = useState<TimesheetEntry[]>(dummyKronosData)
+export default function Timesheet({ employeeId }: { employeeId: string }) {
+  const [timesheet, setTimesheet] = useState<TimesheetEntry[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Simulate fetching data from Kronos
-    // In a real application, this would be an API call
-    setTimesheet(dummyKronosData)
-  }, [])
+    const loadTimesheet = async () => {
+      setLoading(true)
+      const data = await fetchKronosData(employeeId)
+      setTimesheet(data)
+      setLoading(false)
+    }
+    loadTimesheet()
+  }, [employeeId])
 
   const handleAdjustment = (index: number, adjustedHours: number) => {
     setTimesheet((prevTimesheet) =>
-      prevTimesheet.map((entry, i) => (i === index ? { ...entry, Hours: adjustedHours } : entry)),
+      prevTimesheet.map((entry, i) => (i === index ? { ...entry, AdjustedHours: adjustedHours } : entry)),
     )
   }
 
-  // Group entries by pay period
   const groupedTimesheet = timesheet.reduce(
     (acc, entry) => {
       const key = `${entry.EarnsBeginDt} - ${entry.EarnsEndDt}`
@@ -188,31 +110,35 @@ export default function Timesheet() {
     {} as Record<string, TimesheetEntry[]>,
   )
 
+  if (loading) {
+    return <div>Loading timesheet data...</div>
+  }
+
   return (
     <div>
       <h3 className="text-xl font-bold mb-4">Timesheet</h3>
       {Object.entries(groupedTimesheet).map(([payPeriod, entries]) => (
         <div key={payPeriod} className="mb-8">
           <h4 className="text-lg font-semibold mb-2">Pay Period: {payPeriod}</h4>
-          <table className="w-full border-collapse border border-gray-300">
+          <table className="w-full border-collapse border border-gray-600">
             <thead>
-              <tr className="bg-gray-100">
-                <th className="border border-gray-300 px-4 py-2">Employee ID</th>
-                <th className="border border-gray-300 px-4 py-2">Earning Code</th>
-                <th className="border border-gray-300 px-4 py-2">Hours</th>
-                <th className="border border-gray-300 px-4 py-2">Adjustment</th>
+              <tr className="bg-gray-800">
+                <th className="border border-gray-600 px-4 py-2">Date</th>
+                <th className="border border-gray-600 px-4 py-2">Earning Code</th>
+                <th className="border border-gray-600 px-4 py-2">Kronos Hours</th>
+                <th className="border border-gray-600 px-4 py-2">Adjusted Hours</th>
               </tr>
             </thead>
             <tbody>
               {entries.map((entry, index) => (
-                <tr key={index}>
-                  <td className="border border-gray-300 px-4 py-2">{entry.Emplid}</td>
-                  <td className="border border-gray-300 px-4 py-2">{entry.EarningCode}</td>
-                  <td className="border border-gray-300 px-4 py-2">{entry.Hours}</td>
-                  <td className="border border-gray-300 px-4 py-2">
+                <tr key={index} className="bg-gray-700">
+                  <td className="border border-gray-600 px-4 py-2">{entry.EarnsBeginDt}</td>
+                  <td className="border border-gray-600 px-4 py-2">{entry.EarningCode}</td>
+                  <td className="border border-gray-600 px-4 py-2">{entry.Hours}</td>
+                  <td className="border border-gray-600 px-4 py-2">
                     <input
                       type="number"
-                      className="border rounded px-2 py-1 w-20"
+                      className="border rounded px-2 py-1 w-20 bg-gray-800 text-white"
                       defaultValue={entry.Hours}
                       onChange={(e) => handleAdjustment(timesheet.indexOf(entry), Number.parseFloat(e.target.value))}
                     />
