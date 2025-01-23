@@ -24,7 +24,7 @@ export default function RemoteSchedule() {
           <select
             value={status}
             onChange={(e) => handleScheduleChange(day, e.target.value)}
-            className="border rounded px-2 py-1"
+            className="bg-gray-700 px-2 py-1 rounded"
           >
             <option value="on-site">On-site</option>
             <option value="remote">Remote</option>
