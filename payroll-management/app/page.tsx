@@ -2,12 +2,22 @@ import Link from "next/link"
 import * as React from 'react';
 import { Stack } from "@mui/material";
 import Button from '@mui/material/Button';
+import MTAlogo from "../public/MTAlogo2.jpg";
+import Image from "next/image";
+
 
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <Stack direction="row" spacing={15}>
+    <div className="flex flex-col items-center justify-center min-h-screen p-8">
+        <Image 
+          src={MTAlogo} 
+          width={800} 
+          height={10}
+          className="mb-8"
+        />
+        <h1 className="text-2xl font-bold mb-12 text-center">Welcome to the MTA Intern Management Hub</h1>
+        <Stack direction="row" spacing={15}>
           <Button variant="outlined">
           <Link href="/intern">
             Intern Portal
@@ -23,7 +33,7 @@ export default function Home() {
             Admin Portal
           </Link>
           </Button>
-      </Stack>
+        </Stack>
 
         
       </div>

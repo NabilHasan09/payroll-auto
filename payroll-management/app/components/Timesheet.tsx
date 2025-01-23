@@ -28,14 +28,14 @@ const dummyKronosData: TimesheetEntry[] = [
     Amount: "",
     Hours: 13.45,
     GrossUp: "N",
-    EarnsBeginDt: "11/16/2024",
-    EarnsEndDt: "11/29/2024",
+    EarnsBeginDt: "11/8/2024",
+    EarnsEndDt: "11/21/2024",
   },
   {
     Emplid: "123456",
     EarningCode: "TRT",
     Amount: "",
-    Hours: 1.25,
+    Hours: 20.25,
     GrossUp: "N",
     EarnsBeginDt: "11/2/2024",
     EarnsEndDt: "11/15/2024",
@@ -44,10 +44,10 @@ const dummyKronosData: TimesheetEntry[] = [
     Emplid: "123456",
     EarningCode: "TRT",
     Amount: "",
-    Hours: 8,
+    Hours: 43.57,
     GrossUp: "N",
-    EarnsBeginDt: "11/2/2024",
-    EarnsEndDt: "11/15/2024",
+    EarnsBeginDt: "12/09/2024",
+    EarnsEndDt: "11/22/2024",
   },
   {
     Emplid: "123456",
@@ -123,7 +123,9 @@ export default function Timesheet({ employeeId }: { employeeId: string }) {
           <table className="w-full border-collapse border border-gray-600">
             <thead>
               <tr className="bg-gray-800">
-                <th className="border border-gray-600 px-4 py-2">Date</th>
+                <th className="border border-gray-600 px-4 py-2">Emplid</th>
+                <th className="border border-gray-600 px-4 py-2">Earning Begins Date</th>
+                <th className="border border-gray-600 px-4 py-2">Earning Ends Date</th>
                 <th className="border border-gray-600 px-4 py-2">Earning Code</th>
                 <th className="border border-gray-600 px-4 py-2">Kronos Hours</th>
                 <th className="border border-gray-600 px-4 py-2">Adjusted Hours</th>
@@ -132,7 +134,9 @@ export default function Timesheet({ employeeId }: { employeeId: string }) {
             <tbody>
               {entries.map((entry, index) => (
                 <tr key={index} className="bg-gray-700">
+                  <td className="border border-gray-600 px-4 py-2">{entry.Emplid}</td>
                   <td className="border border-gray-600 px-4 py-2">{entry.EarnsBeginDt}</td>
+                  <td className="border border-gray-600 px-4 py-2">{entry.EarnsEndDt}</td>
                   <td className="border border-gray-600 px-4 py-2">{entry.EarningCode}</td>
                   <td className="border border-gray-600 px-4 py-2">{entry.Hours}</td>
                   <td className="border border-gray-600 px-4 py-2">
@@ -143,6 +147,7 @@ export default function Timesheet({ employeeId }: { employeeId: string }) {
                       onChange={(e) => handleAdjustment(timesheet.indexOf(entry), Number.parseFloat(e.target.value))}
                     />
                   </td>
+                  
                 </tr>
               ))}
             </tbody>

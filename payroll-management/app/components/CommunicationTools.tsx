@@ -22,7 +22,7 @@ export default function CommunicationTools() {
           type="text"
           value={recipient}
           onChange={(e) => setRecipient(e.target.value)}
-          className="border rounded px-2 py-1 w-full"
+          className="border rounded px-2 py-1 w-full bg-gray-700"
           placeholder="Enter recipient name or email"
         />
       </div>
@@ -31,11 +31,11 @@ export default function CommunicationTools() {
         <textarea
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className="border rounded px-2 py-1 w-full h-32"
+          className="border rounded px-2 py-1 w-full h-32 bg-gray-700"
           placeholder="Type your message here"
         />
       </div>
-      <button onClick={handleSendMessage} className="bg-blue-500 text-white px-4 py-2 rounded">
+      <button onClick={handleSendMessage} className="bg-blue-500 text-white px-4 py-2 rounded ">
         Send Message
       </button>
     </div>

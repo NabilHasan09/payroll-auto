@@ -19,7 +19,7 @@ export default function ReportGenerator() {
         <select
           value={reportType}
           onChange={(e) => setReportType(e.target.value)}
-          className="border rounded px-2 py-1 w-full"
+          className="border rounded px-2 py-1 w-full bg-gray-700 px-2 py-1 rounded"
         >
           <option value="adjustments">Adjustments Report</option>
           <option value="discrepancies">Discrepancies Report</option>
@@ -32,7 +32,7 @@ export default function ReportGenerator() {
           type="date"
           value={dateRange.start}
           onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
-          className="border rounded px-2 py-1 w-full"
+          className="border w-full bg-gray-700 px-2 py-1 rounded"
         />
       </div>
       <div className="mb-4">
@@ -41,7 +41,7 @@ export default function ReportGenerator() {
           type="date"
           value={dateRange.end}
           onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
-          className="border rounded px-2 py-1 w-full"
+          className="border rounded px-2 py-1 w-full bg-gray-700"
         />
       </div>
       <button onClick={handleGenerateReport} className="bg-blue-500 text-white px-4 py-2 rounded">

@@ -6,14 +6,14 @@ import { useState } from "react"
 const dummyPendingApprovals = [
   {
     id: 1,
-    intern: "John Doe",
+    intern: "Gregory Tomchuk",
     date: "2023-07-10",
     type: "Timesheet Adjustment",
     details: "Changed hours from 7.5 to 8",
   },
   {
     id: 2,
-    intern: "Jane Smith",
+    intern: "Hasib Shaif",
     date: "2023-07-11",
     type: "Remote Day Request",
     details: "Requesting to work remotely on Friday",
