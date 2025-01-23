@@ -8,22 +8,22 @@ const dummyPendingApprovals = [
     id: 1,
     intern: "Gregory Tomchuk",
     date: "2023-07-10",
-    type: "Timesheet Adjustment",
-    details: "Changed hours from 7.5 to 8",
+    adjustment: "Changed hours from 13.45 to 21.45",
+    reason: "Remote day",
   },
   {
     id: 2,
     intern: "Hasib Shaif",
     date: "2023-07-11",
-    type: "Remote Day Request",
-    details: "Requesting to work remotely on Friday",
+    adjustment: "Changed hours from 12 to 20",
+    reason: "Kronos error"
   },
   {
     id: 3,
     intern: "Bob Johnson",
     date: "2023-07-12",
-    type: "Overtime Request",
-    details: "Requesting approval for 2 hours overtime",
+    adjustment: "Changed hours from 40 to 65",
+    reason: "on-field work"
   },
 ]
 
@@ -47,10 +47,10 @@ export default function ApprovalWorkflow() {
             <strong>Date:</strong> {approval.date}
           </p>
           <p>
-            <strong>Type:</strong> {approval.type}
+            <strong>Details:</strong> {approval.adjustment}
           </p>
           <p>
-            <strong>Details:</strong> {approval.details}
+            <strong>Reason:</strong> {approval.reason}
           </p>
           <div className="mt-2">
             <button
