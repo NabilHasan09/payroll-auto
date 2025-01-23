@@ -13,7 +13,7 @@ interface TimesheetEntry {
 }
 
 // Dummy function to simulate fetching Kronos data
-const fetchKronosData = async (employeeId: string): Promise<TimesheetEntry[]> => {
+const fetchKronosData = async (): Promise<TimesheetEntry[]> => {
   // In a real app, this would be an API call
   return new Promise((resolve) => {
     setTimeout(() => resolve(dummyKronosData), 500)
@@ -77,7 +77,7 @@ const dummyKronosData: TimesheetEntry[] = [
   },
 ]
 
-export default function Timesheet({ employeeId }: { employeeId: string }) {
+export default function Timesheet() {
   const [timesheet, setTimesheet] = useState<TimesheetEntry[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -87,12 +87,12 @@ export default function Timesheet({ employeeId }: { employeeId: string }) {
   useEffect(() => {
     const loadTimesheet = async () => {
       setLoading(true)
-      const data = await fetchKronosData(employeeId)
+      const data = await fetchKronosData()
       setTimesheet(data)
       setLoading(false)
     }
     loadTimesheet()
-  }, [employeeId])
+  }, [])
 
   const handleAdjustment = (index: number, adjustedHours: number) => {
     setTimesheet((prevTimesheet) =>

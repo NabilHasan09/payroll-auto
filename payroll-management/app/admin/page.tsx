@@ -5,7 +5,6 @@ import DataSummary from "../components/DataSummary"
 import ReportGenerator from "../components/ReportGenerator"
 import CommunicationTools from "../components/CommunicationTools"
 import ManagerDashboard from "./components/ManagerDashboard"
-import ApprovalWorkflow from "./components/ApprovalWorkFlow"
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("dashboard")

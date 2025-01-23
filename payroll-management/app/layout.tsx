@@ -24,6 +24,7 @@ export default function RootLayout({
               src={logo} 
               width={50} 
               height={40}
+              alt="mta-logo"
             />
           </header>
         <main className="container mx-auto p-4">{children}</main>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
 // Dummy data to simulate notifications
 const dummyNotifications = [

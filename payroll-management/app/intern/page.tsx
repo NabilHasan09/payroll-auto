@@ -33,7 +33,7 @@ export default function InternPortal() {
         </button>
       </div>
       {activeTab === "timesheet" && <Timesheet employeeId={employeeId} />}
-      {activeTab === "schedule" && <RemoteSchedule employeeId={employeeId} />}
+      {activeTab === "schedule" && <RemoteSchedule/>}
       {activeTab === "notifications" && <Notifications />}
     </div>
   )

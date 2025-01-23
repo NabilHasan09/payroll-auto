@@ -15,6 +15,7 @@ export default function Home() {
           width={800} 
           height={10}
           className="mb-8"
+          alt="mtalogo"
         />
         <h1 className="text-2xl font-bold mb-12 text-center">Welcome to the MTA Intern Management Hub</h1>
         <Stack direction="row" spacing={15}>
