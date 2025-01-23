@@ -20,7 +20,7 @@ const fetchInternTimesheets = async (): Promise<InternTimesheet[]> => {
         resolve([
           {
             internId: "123456",
-            internName: "John Doe",
+            internName: "Gregory Tomchuk",
             payPeriod: "11/16/2024 - 11/29/2024",
             totalHours: 80,
             adjustedHours: 82,
@@ -28,7 +28,7 @@ const fetchInternTimesheets = async (): Promise<InternTimesheet[]> => {
           },
           {
             internId: "234567",
-            internName: "Jane Smith",
+            internName: "Hasib Shaif",
             payPeriod: "11/16/2024 - 11/29/2024",
             totalHours: 75,
             adjustedHours: 75,
@@ -38,8 +38,8 @@ const fetchInternTimesheets = async (): Promise<InternTimesheet[]> => {
             internId: "345678",
             internName: "Bob Johnson",
             payPeriod: "11/16/2024 - 11/29/2024",
-            totalHours: 85,
-            adjustedHours: 80,
+            totalHours: 80,
+            adjustedHours: 100,
             status: "rejected",
           },
         ]),
@@ -77,7 +77,7 @@ export default function ManagerDashboard() {
 
   return (
     <div>
-      <h3 className="text-xl font-bold mb-4">Manager Dashboard</h3>
+      <h3 className="text-xl font-bold mb-4">Admin Interns</h3>
       <div className="mb-4">
         <label className="mr-2">Filter:</label>
         <select
@@ -94,6 +94,7 @@ export default function ManagerDashboard() {
       <table className="w-full border-collapse border border-gray-600">
         <thead>
           <tr className="bg-gray-800">
+            <th className="border border-gray-600 px-4 py-2">InternId</th>
             <th className="border border-gray-600 px-4 py-2">Intern Name</th>
             <th className="border border-gray-600 px-4 py-2">Pay Period</th>
             <th className="border border-gray-600 px-4 py-2">Total Hours</th>
@@ -105,6 +106,7 @@ export default function ManagerDashboard() {
         <tbody>
           {filteredTimesheets.map((timesheet) => (
             <tr key={timesheet.internId} className="bg-gray-700">
+              <td className="border border-gray-600 px-4 py-2">{timesheet.internId}</td>
               <td className="border border-gray-600 px-4 py-2">{timesheet.internName}</td>
               <td className="border border-gray-600 px-4 py-2">{timesheet.payPeriod}</td>
               <td className="border border-gray-600 px-4 py-2">{timesheet.totalHours}</td>
