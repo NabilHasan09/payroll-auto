@@ -24,10 +24,10 @@ export default function Notifications() {
     <div>
       <h3 className="text-xl font-bold mb-4">Notifications</h3>
       {notifications.map((notif) => (
-        <div key={notif.id} className={`p-4 mb-2 rounded ${notif.read ? "bg-gray-100" : "bg-blue-100"}`}>
+        <div key={notif.id} className={`p-4 mb-2 rounded ${notif.read ? "bg-green-500" : "bg-blue-500"}`}>
           <p>{notif.message}</p>
           {!notif.read && (
-            <button className="mt-2 text-sm text-blue-500" onClick={() => markAsRead(notif.id)}>
+            <button className="mt-2 text-sm text-black font-bold" onClick={() => markAsRead(notif.id)}>
               Mark as read
             </button>
           )}
