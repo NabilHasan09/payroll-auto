@@ -30,7 +30,7 @@ const dummyPendingApprovals = [
 export default function ApprovalWorkflow() {
   const [pendingApprovals, setPendingApprovals] = useState(dummyPendingApprovals)
 
-  const handleApproval = (id: number, approved: boolean) => {
+  const handleApproval = (id: number) => {
     // In a real application, this would send an API request
     setPendingApprovals(pendingApprovals.filter((approval) => approval.id !== id))
   }
@@ -55,13 +55,13 @@ export default function ApprovalWorkflow() {
           <div className="mt-2">
             <button
               className="bg-green-500 text-white px-4 py-2 rounded mr-2"
-              onClick={() => handleApproval(approval.id, true)}
+              onClick={() => handleApproval(approval.id)}
             >
               Approve
             </button>
             <button
               className="bg-red-500 text-white px-4 py-2 rounded"
-              onClick={() => handleApproval(approval.id, false)}
+              onClick={() => handleApproval(approval.id)}
             >
               Reject
             </button>
